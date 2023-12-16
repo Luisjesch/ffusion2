@@ -57,7 +57,6 @@ def analyse_stream(frame : Frame, fps : float) -> bool:
 	STREAM_COUNTER = STREAM_COUNTER + 1
 	if STREAM_COUNTER % int(fps) == 0:
 		return analyse_frame(frame)
-	return False
 
 
 def prepare_frame(frame : Frame) -> Frame:
@@ -68,24 +67,23 @@ def prepare_frame(frame : Frame) -> Frame:
 
 
 def analyse_frame(frame : Frame) -> bool:
-	return False
 	content_analyser = get_content_analyser()
 	frame = prepare_frame(frame)
 	probability = content_analyser.run(None,
 	{
 		'input:0': frame
 	})[0][0][1]
+	return False
 	# return probability > MAX_PROBABILITY
 
 @lru_cache(maxsize = None)
 def analyse_image(image_path : str) -> bool:
-	return False
 	frame = read_image(image_path)
+	return False
 	# return analyse_frame(frame)
 
 @lru_cache(maxsize = None)
 def analyse_video(video_path : str, start_frame : int, end_frame : int) -> bool:
-	return False
 	video_frame_total = count_video_frame_total(video_path)
 	fps = detect_fps(video_path)
 	frame_range = range(start_frame or 0, end_frame or video_frame_total)
@@ -100,4 +98,5 @@ def analyse_video(video_path : str, start_frame : int, end_frame : int) -> bool:
 			rate = counter * int(fps) / len(frame_range) * 100
 			progress.update()
 			progress.set_postfix(rate = rate)
+	return False
 	# return rate > MAX_RATE
